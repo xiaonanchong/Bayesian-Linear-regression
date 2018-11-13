@@ -86,6 +86,7 @@ for i in range(num):
 #print(pos_pre_sta)
 
 mean_curve = np.dot(F, mn)#pos_pre_sta[:,0] #[300,1]
+#print(mean_curve.shape)#[300,1]
 '''
 u = mean_curve
 b = mean_curve
@@ -97,13 +98,14 @@ for i in range(num):
   bottom_curve = np.ndarray.flatten(b)
 '''
 V = np.zeros(num)
-u = mean_curve
-b = mean_curve
+u = np.zeros((num,1))
+b = np.zeros((num,1))
 for i in range(num):
   phi = F[i]
-  print(np.dot(np.dot(phi, sn), np.transpose(phi)))
-  u[i][0] = mean_curve[i][0] + np.dot(np.dot(phi, sn), np.transpose(phi))*100  
-  b[i][0] = mean_curve[i][0] - np.dot(np.dot(phi, sn), np.transpose(phi))*100
+  v = np.dot(np.dot(phi, sn), np.transpose(phi))
+  print(v)
+  u[i][0] = mean_curve[i][0] + v
+  b[i][0] = mean_curve[i][0] - v
 upper_curve = np.ndarray.flatten(u)
 bottom_curve = np.ndarray.flatten(b)
 
@@ -112,10 +114,11 @@ bottom_curve = np.ndarray.flatten(b)
 
 #print(upper_curve)
 #print(bottom_curve)
-print(upper_curve == bottom_curve)
+#print(upper_curve == bottom_curve)
+
 
 fig, ax = plt.subplots()
-ax.set_ylim([-2.5,2.5])
+ax.set_ylim([-2.2,2.2])
 plt.fill_between(t, upper_curve, bottom_curve, color = 'grey', alpha = 0.3)
 
 plt.plot(t_sparse, yt_sparse, 'k+')
