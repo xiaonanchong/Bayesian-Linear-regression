@@ -23,11 +23,26 @@ def phi(N, M):
         phi[i][j]=np.cos(2*np.pi*J*X[i])
   return phi
 
-phi = phi(25,10)# order!
+def phi2(N, order):
+  X = np.linspace(0,0.9,N)
+  phi = np.empty([N, 2*order+1])
+  for i in range(N):
+    for j in range(2*order+1):
+      if(j==0):
+        phi[i][j]=1
+      elif(j%2 ==1):
+        J = (j+1)/2
+        phi[i][j]=np.sin(2*np.pi*J*X[i])
+      else:
+        J = j/2
+        phi[i][j]=np.cos(2*np.pi*J*X[i])
+  return phi
+
+phi = phi2(25,9)# order!
 
 delta = 0.005#0.005[1-4]
-a = np.arange(0.1, 1.0, delta) #M
-b = np.arange(0.1, 1.0, delta) #N
+a = np.arange(0.01, 0.5, delta) #M
+b = np.arange(0.01, 0.5, delta) #N
 m = a.shape[0]
 n = b.shape[0]
 z = np.empty([n,m])
@@ -75,7 +90,7 @@ def grad(x,y):
     mlml1 = an.lml(x, y, phi, Yd)
     
     if(mlml1-mlml == 0 or count > 10000):
-      if(mlml1-mlml == 0 ):
+      if(mlml1-mlml < 0.00001 ):
         print(mlml1, x, y)
       v = False
 
@@ -86,7 +101,7 @@ def grad(x,y):
 
 
 #plot2Dpoint(0.2,0.2)
-grad(0.2,0.2)
+grad(0.25,0.2)
 plt.show()
 
 # order = [0,4]

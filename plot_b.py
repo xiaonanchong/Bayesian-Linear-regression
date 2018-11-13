@@ -8,10 +8,10 @@ import answers as an
 
 Xd = np.linspace(0,0.9,25)
 Yd = np.cos(10*Xd**2) + 0.1*np.sin(100*Xd)
-phi = np.reshape(Xd, [25,1])
+phi = np.reshape([[1]*25, Xd], [25,2])
 delta = 0.005
-a = np.arange(0.1, 1.0, delta) #M
-b = np.arange(0.1, 1.0, delta) #N
+a = np.arange(0.1, 1, delta) #M
+b = np.arange(0.1, 1, delta) #N
 m = a.shape[0]
 n = b.shape[0]
 z = np.empty([n,m])
@@ -21,7 +21,7 @@ for a1 in range(m):
 #print(z.shape)
 
 fig, ax = plt.subplots()
-CS = ax.contour(a,b,z,100)
+CS = ax.contour(a,b,z,30)
 ax.clabel(CS, inline=1, fontsize=10)
 ax.set_title('Maximize Log marginal Likelihood - Linear Function Basis')
 #(starting point-(0.9,0.9) step_size = 0.025)
@@ -34,7 +34,7 @@ def plot2Dpoint(x,y):
   plt.scatter(x, y)
 
 def grad(x,y):
-  gama = 0.005
+  gama = 0.01
   v = True
   count = 0
   mlml = 0
@@ -65,6 +65,6 @@ def grad(x,y):
     mlml = mlml1
     count = count + 1
 
-plot2Dpoint(0.9,0.9)
-grad(0.9,0.9)
+plot2Dpoint(0.5,0.5)
+grad(0.5,0.5)
 plt.show()

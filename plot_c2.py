@@ -90,12 +90,8 @@ XX = [0,1, 2, 3, 4,5,6,7,8,9,10]
 YY = np.empty([11])
 sigma = np.empty([11])
 
-sum_error = 0
 for i in range(11):
-  sum_error = sum_error + cross_validation(i,N-1)
-print(sum_error)
-for i in range(11):
-  YY[i] = np.log(cross_validation(i,N-1)/sum_error)
+  YY[i] = cross_validation(i,N-1)*100
 
 for i in range(11):
   sigma[i] = sigma_square(i,N)
@@ -112,9 +108,23 @@ mlml0 = [-28.4944341114782,
 -6.92848522100128,
 -8.79662037940724
 ]
-mlml = mlml0
+
+mlml2= [
+    -27.80190177509497, #0
+    -18.345538196134015, #1
+    -14.155975751699678, #2
+    -9.355509112701306, #3
+    -6.92848522100128, #4
+    -7.058505959618605, #5
+    -9.067900608464498, #6
+    -12.215579803844987, #7
+    -15.758751753692808, #8
+    -19.109833379365462, #9
+    -21.261886726092822 #10
+]
+mlml = mlml2
 for i in range(11):
-  mlml[i] = mlml0[i] #math.exp(mlml0[i])
+  mlml[i] = mlml2[i] #math.exp(mlml0[i])
 
 plt.plot(XX, YY, 'r')
 #plt.plot(XX, sigma, 'g')
@@ -123,7 +133,7 @@ plt.plot(XX,YY, 'r+')
 #plt.plot(XX, sigma, 'g^')
 plt.plot(XX, mlml, 'b*')
 ##set annotation
-notation = [str(round(YY[i],0)) for i in range(11)]
+notation = [str(round(YY[i],2)) for i in range(11)]
 for i, x in enumerate(notation):
     ax.annotate(notation[i], (XX[i], YY[i]), fontsize=12)
 '''    
@@ -135,11 +145,11 @@ notation = [str(round(mlml[i],2)) for i in range(11)]
 for i, x in enumerate(notation):
     ax.annotate(notation[i], (XX[i], mlml[i]), fontsize=12)
     
-plt.legend(('the log value of normalized cross validation','log maximum marginal likelihood'), 
+plt.legend(('cross validation(e-100)','log maximum marginal likelihood'), 
            loc='upper center', shadow=True) #'ML value for sigma square (e-100)', 
 #---------------------------------------
 
 plt.xlim(-0.5, 10.5)
-plt.ylim(-30, 10)
+plt.ylim(-30, 60)
 
 plt.show()
