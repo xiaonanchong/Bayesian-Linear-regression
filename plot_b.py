@@ -8,10 +8,14 @@ import answers as an
 
 Xd = np.linspace(0,0.9,25)
 Yd = np.cos(10*Xd**2) + 0.1*np.sin(100*Xd)
-phi = np.reshape([[1]*25, Xd], [25,2])
+x0 = [1]*25
+x1 = Xd
+phi = np.column_stack((x0, x1))
+
+#phi = np.reshape([[1]*25, Xd], [25,2])
 delta = 0.005
-a = np.arange(0.1, 1, delta) #M
-b = np.arange(0.1, 1, delta) #N
+a = np.arange(0.3, 1, delta) #M
+b = np.arange(0.3, 1, delta) #N
 m = a.shape[0]
 n = b.shape[0]
 z = np.empty([n,m])
@@ -20,8 +24,14 @@ for a1 in range(m):
     z[b1][a1] = an.lml(a[a1], b[b1], phi, Yd)
 #print(z.shape)
 
+A, B = np.meshgrid(a,b)
+Z = np.empty((len(A), len(B),))
+for a in range(len(A)):
+    for b in range(len(B)):
+        Z[a][b] = an.lml(A[a][b], B[a][b], phi, Yd)
+
 fig, ax = plt.subplots()
-CS = ax.contour(a,b,z,30)
+CS = ax.contour(A,B,Z,30)
 ax.clabel(CS, inline=1, fontsize=10)
 ax.set_title('Maximize Log marginal Likelihood - Linear Function Basis')
 #(starting point-(0.9,0.9) step_size = 0.025)
@@ -65,6 +75,6 @@ def grad(x,y):
     mlml = mlml1
     count = count + 1
 
-plot2Dpoint(0.5,0.5)
-grad(0.5,0.5)
+plot2Dpoint(0.7,0.7)
+grad(0.7,0.7)
 plt.show()
