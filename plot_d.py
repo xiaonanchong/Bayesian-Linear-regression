@@ -33,14 +33,14 @@ def mean_sd(predict):
 alpha = 1
 beta = 0.1 
 N = 25
-M = 10
+M = 11
 
 # TRAINING DATA
 X = np.reshape(np.linspace(0,0.9,N),(N,1))
 y = np.reshape(np.cos(10*X**2) + 0.1*np.sin(100*X),(N,1))
 
 # MODEL order: M
-mu = np.linspace(-0.5, 1, 9)#10 Gausian basis functions equally spaced between -0.5 and 1 
+mu = np.linspace(-0.5, 1, 10)#10 Gausian basis functions equally spaced between -0.5 and 1 
 L = 0.1 #with scale 0.1
 phi = Phi(N, M, X)
 phi_t = np.transpose(phi)
