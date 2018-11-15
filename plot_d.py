@@ -102,7 +102,7 @@ u = np.zeros((num,1))
 b = np.zeros((num,1))
 for i in range(num):
   phi = F[i]
-  v = np.dot(np.dot(phi, sn), np.transpose(phi))
+  v = np.sqrt(np.dot(np.dot(phi, sn), np.transpose(phi)))
   print(v)
   u[i][0] = mean_curve[i][0] + v
   b[i][0] = mean_curve[i][0] - v
